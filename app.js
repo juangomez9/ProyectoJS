@@ -1,11 +1,3 @@
-function calcularCoutas(valorTotal, cantidadCoutas) {
-    return valorTotal / cantidadCoutas;
-}
-
-function agregarComision(precio) {
-    return precio * 1.15;
-}
-
 class Producto {
     constructor(id, nombre, precio, descripcion) {
         this.id = id;
@@ -17,6 +9,12 @@ class Producto {
     mostrarInfo() {
         alert(`Usted selecciono ${this.nombre} ${this.precio} ${this.descripcion}`)
     }
+    agregarComision(precio) {
+        return precio * 1.15;
+    }
+    calcularCoutas(valorTotal, cantidadCoutas) {
+        return valorTotal / cantidadCoutas;
+    } 
 }
 
 const array = [];
@@ -96,11 +94,11 @@ do {
 
         alert(`Usted selecciono ${numeroCoutas} cuotas`)
 
-        let precioTotalConComision = agregarComision(resultado.precio)
+        let precioTotalConComision = resultado.agregarComision(resultado.precio)
 
-        let valorCuota = calcularCoutas(precioTotalConComision, numeroCoutas)
+        let valorCuota = resultado.calcularCoutas(precioTotalConComision, numeroCoutas)
 
-        alert(`Usted pagara ${valorCuota}`)
+        alert(`Usted pagara ${valorCuota} en cada couta`)
 
 
     } else {
