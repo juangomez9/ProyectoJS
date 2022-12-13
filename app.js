@@ -9,8 +9,8 @@ class Producto {
     mostrarInfo() {
         alert(`Usted selecciono ${this.nombre} ${this.precio} ${this.descripcion}`)
     }
-    agregarComision(precio) {
-        return precio * 1.15;
+    agregarComision() {
+        return this.precio * 1.15;
     }
     calcularCoutas(valorTotal, cantidadCoutas) {
         return valorTotal / cantidadCoutas;
@@ -94,7 +94,7 @@ do {
 
         alert(`Usted selecciono ${numeroCoutas} cuotas`)
 
-        let precioTotalConComision = resultado.agregarComision(resultado.precio)
+        let precioTotalConComision = resultado.agregarComision()
 
         let valorCuota = resultado.calcularCoutas(precioTotalConComision, numeroCoutas)
 
