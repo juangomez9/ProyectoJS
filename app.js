@@ -1,46 +1,79 @@
+function calcularCoutas(valorTotal, cantidadCoutas) {
+    return valorTotal / cantidadCoutas;
+}
+
+function agregarComision(precio) {
+    return precio * 1.15;
+}
+
+class Producto {
+    constructor(id, nombre, precio, descripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.descripcion = descripcion;
+    }
+
+    mostrarInfo() {
+        alert(`Usted selecciono ${this.nombre} ${this.precio} ${this.descripcion}`)
+    }
+}
+
+const array = [];
+array.push(new Producto(1, "Samsung", 70000, "Televisor de 24 pulgadas"))
+array.push(new Producto(2, "LG", 60000, "Televisor de 24 pulgadas"))
+array.push(new Producto(3, "RCA", 55000, "Televisor de 24 pulgadas"))
+array.push(new Producto(4, "TCL", 50000, "Televisor de 24 pulgadas"))
+
+class Persona {
+    nombre;
+    apellido;
+    email;
+    direccion;
+
+    constructor() {}
+
+    setNombre(nombre) {
+        this.nombre = nombre;
+    }
+    setApellido(apellido) {
+        this.apellido = apellido;
+    }
+    setEmail(email) {
+        this.email = email;
+    }
+    setDireccion(direccion) {
+        this.direccion = direccion;
+    }
+
+    saludar() {
+        alert(`Bienvenido ${this.nombre} ${this.apellido}, sus datos son
+        ${this.email} ${this.direccion}`)
+    }
+}
+
 alert("Bienvenido a Televisores SA.");
 
 let cuenta = confirm("Usted desea crear una cuenta?");
 
-let Samsung = 60000;
-let LG = 50000;
-let RCA = 55000;
-let LGB = 40000;
-
 do {
     if (cuenta) {
-        let nombre = prompt("Ingrese nombre");
-        let apellido = prompt("Ingrese apellido");
-        let email = prompt("Ingrese email");
-        let direccion = prompt("Ingrese direccion");
+        const usuario1 = new Persona();
+        usuario1.setNombre(prompt("Ingrese nombre"))
+        usuario1.setApellido(prompt("Ingrese apellido"))
+        usuario1.setEmail(prompt("Ingrese email"))
+        usuario1.setDireccion(prompt("Ingrese direccion"));
 
-        let televisor = parseInt( prompt(`Que televisor desea comprar?
+        usuario1.saludar();
+
+        let televisor = parseInt(prompt(`Que televisor desea comprar?
 1: Samsung
 2: LG
 3: RCA
 4: LGB`));
 
-        switch (televisor) {
-            case 1:
-                alert(`Usted selecciono Samsung
-El precio de Samsung es de ${Samsung}`);
-                break;
-            case 2:
-                alert(`Usted selecciono LG
-El precio de LG es de ${LG}`);
-                break;
-            case 3:
-                alert(`Usted selecciono RCA
-El precio de RCA es de ${RCA}`);
-                break;
-            case 4:
-                alert(`Usted selecciono LGB
-El precio de LGB es de ${LGB}`);
-                break;
-            default:
-                "Esta opcion no esta disponible";
-                break;
-        }
+        const resultado = array.find(elemento => elemento.id === televisor)
+        resultado.mostrarInfo()
 
         let pago = confirm("Desea realizar el pago en efectivo?");
 
@@ -63,8 +96,7 @@ El precio de LGB es de ${LGB}`);
 
         alert(`Usted selecciono ${numeroCoutas} cuotas`)
 
-        let precioTotal = obtenerPrecio(televisor)
-        let precioTotalConComision = agregarComision(precioTotal)
+        let precioTotalConComision = agregarComision(resultado.precio)
 
         let valorCuota = calcularCoutas(precioTotalConComision, numeroCoutas)
 
@@ -76,29 +108,3 @@ El precio de LGB es de ${LGB}`);
         break;
     }
 } while (cuenta == false);
-
-
-function calcularCoutas(valorTotal, cantidadCoutas) {
-    return valorTotal / cantidadCoutas;
-
-}
-
-function obtenerPrecio(marcaTelevisor) {
-    switch (marcaTelevisor) {
-        case 1:
-            return Samsung;
-        case 2:
-            return LG;
-        case 3:
-            return RCA;
-        case 4:
-            return LGB;
-
-        default:
-            return 0;
-    }
-}
-
-function agregarComision(precio){
-    return precio * 1.15;
-}
