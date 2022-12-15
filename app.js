@@ -14,7 +14,7 @@ class Producto {
     }
     calcularCoutas(valorTotal, cantidadCoutas) {
         return valorTotal / cantidadCoutas;
-    } 
+    }
 }
 
 const array = [];
@@ -77,29 +77,29 @@ do {
 
         if (pago) {
             alert(`Su pago se realizo con exito`);
-        }
+        } else {
+            let tarjeta = confirm("Desea realizar el pago con tarjeta?");
+            let numeroCoutas;
 
-        let tarjeta = confirm("Desea realizar el pago con tarjeta?");
-        let numeroCoutas;
-
-        if (tarjeta) {
-            numeroCoutas = parseInt(prompt(`En cuantas coutas lo desea realizar?
+            if (tarjeta) {
+                numeroCoutas = parseInt(prompt(`En cuantas coutas lo desea realizar?
     3 coutas
     6 coutas
     12 coutas
     24 coutas`));
-        } else {
-            alert("Solo se aceptan estos metodos de pago");
+
+                alert(`Usted selecciono ${numeroCoutas} cuotas`)
+
+                let precioTotalConComision = resultado.agregarComision()
+
+                let valorCuota = resultado.calcularCoutas(precioTotalConComision, numeroCoutas)
+
+                alert(`Usted pagara ${valorCuota} en cada couta`)
+
+            } else {
+                alert("Solo se aceptan estos metodos de pago");
+            }
         }
-
-        alert(`Usted selecciono ${numeroCoutas} cuotas`)
-
-        let precioTotalConComision = resultado.agregarComision()
-
-        let valorCuota = resultado.calcularCoutas(precioTotalConComision, numeroCoutas)
-
-        alert(`Usted pagara ${valorCuota} en cada couta`)
-
 
     } else {
         alert("Usted debe crear una cuenta para acceder");
