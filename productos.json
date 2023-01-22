@@ -1,0 +1,10 @@
+[
+    {"id":1, "nombre": "BGH", "precio": 100000},
+    {"id":2, "nombre": "Hitachi", "precio": 110000},
+    {"id":3, "nombre": "Kodak", "precio": 130500},
+    {"id":4, "nombre": "Samsung", "precio": 150000},
+    {"id":5, "nombre": "Sony", "precio": 168000},
+    {"id":6, "nombre": "Philips", "precio": 174000},
+    {"id":7, "nombre": "LG", "precio": 185000},
+    {"id":8, "nombre": "Noblex", "precio": 190000}
+]
