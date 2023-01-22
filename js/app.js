@@ -1,36 +1,52 @@
-const cardBodies = document.querySelectorAll(".card-body");
+const cardBodies = document.querySelector("#tarjetas");
 
-//Pinta datos en las tarjetas
-const pintar = (prod) => {
-    return `
-            <h5 class="card-title text-center">${prod.nombre}</h5>
-            <p class="card-text text-center">Precio: ${prod.precio}</p>
-            <button id=${prod.id} class="boton-compra btn btn-primary">Comprar</button>`
-}
-
-const cargarTarjetas = (tarjetas) => {
-    for (let i = 0; i < tarjetas.length; i++) {
-        tarjetas[i].innerHTML = pintar(productos[i])
+//Creamos constructor de productos
+class Producto {
+    constructor(objeto) {
+        this.id = objeto.id
+        this.nombre = objeto.nombre;
+        this.precio = objeto.precio
     }
 }
 
-//Cargamos tarjetas
-cargarTarjetas(cardBodies);
+//Pintamos las tarjetas en HTML 
+fetch("/productos.json")
+    .then((resp) => resp.json())
+    .then((productos) => {
+        productos.forEach((prod) => {
+            const card = document.createElement("card");
+            card.innerHTML = `
+            <div class="card" style="width: 15rem;">
+            <div class="card-body">
+            <h5 class="card-title text-center">${prod.nombre}</h5>
+            <p class="card-text text-center">Precio: ${prod.precio}</p>
+            <button id=${prod.id} class="boton-compra btn btn-primary">Comprar</button>
+            </div>
+            </div>`;
+            cardBodies.append(card);
+            productos2.push(new Producto(prod))
+        });
+        eventoBotones();
+    });
 
-//Creamos array vacio
+const productos2 = [];
+
+//Creamos array vacio para el carrito
 let carrito = [];
 
 //Evento boton 
-const botonesCompra = document.querySelectorAll(".boton-compra");
-botonesCompra.forEach((button) => {
-    button.addEventListener("click", (e) => {
-        agregarCarrito(parseInt(e.target.id))
+function eventoBotones() {
+    const botonesCompra = document.querySelectorAll(".boton-compra");
+    botonesCompra.forEach((button) => {
+        button.addEventListener("click", (e) => {
+            agregarCarrito(parseInt(e.target.id))
+        })
     })
-})
+}
 
 //Recorremos el array y pusheamos el producto
 function agregarCarrito(prodId) {
-    let producto = productos.find((producto) => {
+    let producto = productos2.find((producto) => {
         return producto.id === prodId
     });
 
@@ -44,7 +60,7 @@ function renderCarrito() {
     carritoHTML.innerHTML = "";
     let tarjetas = carrito.map((producto) => {
         return `
-        <div class="col-4 card" style="width: 15rem;">
+        <div class="card m-3" style="width: 15rem;">
         <div class"card-body">
         <h5 class="card-title">${producto.nombre}</h5>
         <p class="card-text">${producto.precio}</p>
@@ -66,6 +82,41 @@ function eliminarCarrito(e) {
         return producto.id !== parseInt(e.target.id)
     })
     renderCarrito();
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+        title: 'Esta seguro que desea eliminar?',
+        text: "Este producto se eliminara del carrito",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, quiero eliminar',
+        cancelButtonText: 'No, cancela!',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            swalWithBootstrapButtons.fire(
+                'Eliminado!',
+                'El producto se elimino del carrito.',
+                'success'
+            )
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+                'Cancelado',
+                'Su producto no se ha eliminado',
+                'error'
+            )
+        }
+    })
 }
 
 //Vaciar productos del carrito
@@ -78,12 +129,30 @@ function vaciarCarrito() {
 const botonVaciar = document.querySelector(".vaciar")
 botonVaciar.addEventListener('click', vaciarCarrito);
 
-//Compramos productos del carrito
+//Compramos productos del carrito y verificamos su contenido
 function comprarCarrito() {
-    const compraRealizada = document.querySelector(".alert")
+    verificarCarrito()
     carrito = [];
     renderCarrito();
-    return compraRealizada.innerHTML = 'Su compra se realizo con exito!'
+}
+
+//Verificamos el carrito
+function verificarCarrito(){
+    if (carrito.length > 0) {
+        Swal.fire({
+            title: 'Su compra se realizo con exito!',
+            width: 600,
+            padding: '3em',
+            color: '#716add',
+            backdrop: `
+              rgba(0,0,123,0.4)
+              left top
+              no-repeat
+            `
+          })
+    } else {
+        Swal.fire('Usted debe seleccionar un producto')
+    }
 }
 
 //Evento comprar carrito
