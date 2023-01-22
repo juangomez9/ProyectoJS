@@ -1,8 +1,3 @@
-let nombreForm = document.querySelector("#nombre");
-let apellidoForm = document.querySelector("#apellido");
-let infoForm = document.querySelector(".info");
-let formulario = document.querySelector("#formulario")
-
 //Creamos array y pusheamos los datos del usuario
 let inputs = Array.from(document.querySelectorAll(".form-control"))
 

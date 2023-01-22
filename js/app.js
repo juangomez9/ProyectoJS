@@ -19,7 +19,7 @@ fetch("/productos.json")
             <div class="card" style="width: 15rem;">
             <div class="card-body">
             <h5 class="card-title text-center">${prod.nombre}</h5>
-            <p class="card-text text-center">Precio: ${prod.precio}</p>
+            <p class="card-text text-center">Precio: $${prod.precio}</p>
             <button id=${prod.id} class="boton-compra btn btn-primary">Comprar</button>
             </div>
             </div>`;
@@ -140,7 +140,7 @@ function comprarCarrito() {
 function verificarCarrito(){
     if (carrito.length > 0) {
         Swal.fire({
-            title: 'Su compra se realizo con exito!',
+            title: 'Su compra se realizo con exito, muchas gracias!',
             width: 600,
             padding: '3em',
             color: '#716add',
@@ -151,7 +151,7 @@ function verificarCarrito(){
             `
           })
     } else {
-        Swal.fire('Usted debe seleccionar un producto')
+        Swal.fire('Usted debe seleccionar un producto para comprar.')
     }
 }
 
@@ -168,5 +168,5 @@ function calcularTotal() {
         total += prod
         return total
     }, 0)
-    pagarTotal.innerHTML = `Total a pagar: ${precioTotal}`
+    pagarTotal.innerHTML = `Total a pagar: $ ${precioTotal}`
 }
